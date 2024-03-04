@@ -9,21 +9,14 @@ import { UUIDType } from '../types/uuid.js';
 import { Profile } from './profile.model.js';
 import { Post } from './post.model.js';
 import { ContextValueType } from '../types/context-value-type.js';
+import { Loaders } from '../types/loaders-enum.js';
 
 const resolveProfile = async (source: { id: string }, _, context: ContextValueType) => {
-  return await context.prisma.profile.findUnique({
-    where: {
-      userId: source.id,
-    },
-  });
+  return await context.loaders.get(Loaders.PROFILE_BY_USER_ID)?.load(source.id);
 };
 
 const resolvePosts = async (source: { id: string }, _, context: ContextValueType) => {
-  return await context.prisma.post.findMany({
-    where: {
-      authorId: source.id,
-    },
-  });
+  return context.loaders.get(Loaders.POST_BY_AUTHOR_ID)?.load(source.id);
 };
 
 const resolveSubscriptions = async (
@@ -31,15 +24,7 @@ const resolveSubscriptions = async (
   _,
   context: ContextValueType,
 ) => {
-  return await context.prisma.user.findMany({
-    where: {
-      subscribedToUser: {
-        some: {
-          subscriberId: source.id,
-        },
-      },
-    },
-  });
+  return await context.loaders.get(Loaders.USER_SUBSCRIBED_TO)?.load(source.id);
 };
 
 const resolveSubscribers = async (
@@ -47,15 +32,7 @@ const resolveSubscribers = async (
   _,
   context: ContextValueType,
 ) => {
-  return await context.prisma.user.findMany({
-    where: {
-      userSubscribedTo: {
-        some: {
-          authorId: source.id,
-        },
-      },
-    },
-  });
+  return await context.loaders.get(Loaders.SUBSCRIBED_TO_USER)?.load(source.id);
 };
 
 export const User: GraphQLObjectType = new GraphQLObjectType({

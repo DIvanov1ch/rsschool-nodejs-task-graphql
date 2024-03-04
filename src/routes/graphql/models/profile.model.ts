@@ -4,17 +4,14 @@ import { MemberType } from './member-type.model.js';
 import { MemberTypeIdType } from '../types/member-type-id.js';
 import { User } from './user.model.js';
 import { ContextValueType } from '../types/context-value-type.js';
+import { Loaders } from '../types/loaders-enum.js';
 
 const resolve = async (
   source: { memberTypeId: string },
   _,
   context: ContextValueType,
 ) => {
-  return await context.prisma.memberType.findUnique({
-    where: {
-      id: source.memberTypeId,
-    },
-  });
+  return await context.loaders.get(Loaders.MEMBER_TYPE)?.load(source.memberTypeId);
 };
 
 export const Profile: GraphQLObjectType = new GraphQLObjectType({
