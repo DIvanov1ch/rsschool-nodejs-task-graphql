@@ -1,5 +1,5 @@
 import { ContextValueType } from '../types/context-value-type.js';
-import { PostType } from '../types/post-type.js';
+import { Post } from '../models/post.model.js';
 import { UUIDType } from '../types/uuid.js';
 
 const resolve = async (_, args: { id: string }, context: ContextValueType) => {
@@ -7,7 +7,7 @@ const resolve = async (_, args: { id: string }, context: ContextValueType) => {
 };
 
 export const postQuery = {
-  type: PostType,
+  type: Post,
   args: { id: { type: UUIDType } },
   resolve,
 };

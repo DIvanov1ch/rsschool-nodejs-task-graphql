@@ -5,10 +5,10 @@ import {
   GraphQLObjectType,
   GraphQLString,
 } from 'graphql';
-import { UUIDType } from './uuid.js';
-import { ProfileType } from './profile-type.js';
-import { PostType } from './post-type.js';
-import { ContextValueType } from './context-value-type.js';
+import { UUIDType } from '../types/uuid.js';
+import { Profile } from './profile.model.js';
+import { Post } from './post.model.js';
+import { ContextValueType } from '../types/context-value-type.js';
 
 const resolveProfile = async (source: { id: string }, _, context: ContextValueType) => {
   return await context.prisma.profile.findUnique({
@@ -58,21 +58,21 @@ const resolveSubscribers = async (
   });
 };
 
-export const UserType: GraphQLObjectType = new GraphQLObjectType({
+export const User: GraphQLObjectType = new GraphQLObjectType({
   name: 'User',
   fields: () => ({
     id: { type: new GraphQLNonNull(UUIDType) },
     name: { type: new GraphQLNonNull(GraphQLString) },
     balance: { type: new GraphQLNonNull(GraphQLFloat) },
 
-    profile: { type: ProfileType, resolve: resolveProfile },
-    posts: { type: new GraphQLList(PostType), resolve: resolvePosts },
+    profile: { type: Profile, resolve: resolveProfile },
+    posts: { type: new GraphQLList(Post), resolve: resolvePosts },
     userSubscribedTo: {
-      type: new GraphQLList(UserType),
+      type: new GraphQLList(User),
       resolve: resolveSubscriptions,
     },
     subscribedToUser: {
-      type: new GraphQLList(UserType),
+      type: new GraphQLList(User),
       resolve: resolveSubscribers,
     },
   }),

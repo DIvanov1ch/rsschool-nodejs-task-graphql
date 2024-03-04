@@ -1,5 +1,5 @@
 import { ContextValueType } from '../types/context-value-type.js';
-import { ProfileType } from '../types/profile-type.js';
+import { Profile } from '../models/profile.model.js';
 import { UUIDType } from '../types/uuid.js';
 
 const resolve = async (_, args: { id: string }, context: ContextValueType) => {
@@ -7,7 +7,7 @@ const resolve = async (_, args: { id: string }, context: ContextValueType) => {
 };
 
 export const profileQuery = {
-  type: ProfileType,
+  type: Profile,
   args: { id: { type: UUIDType } },
   resolve,
 };

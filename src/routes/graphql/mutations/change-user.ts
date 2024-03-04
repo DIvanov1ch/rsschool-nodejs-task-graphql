@@ -1,12 +1,12 @@
 import { GraphQLNonNull } from 'graphql';
-import { UserType } from '../types/user-type.js';
+import { User } from '../models/user.model.js';
 import { ContextValueType } from '../types/context-value-type.js';
 import { UUIDType } from '../types/uuid.js';
 import { ChangeUserInputType } from '../types/change-user-input-type.js';
 import { UserInput } from '../types/input-types.js';
 
 export const changeUser = {
-  type: UserType,
+  type: User,
   args: {
     id: { type: new GraphQLNonNull(UUIDType) },
     dto: { type: new GraphQLNonNull(ChangeUserInputType) },

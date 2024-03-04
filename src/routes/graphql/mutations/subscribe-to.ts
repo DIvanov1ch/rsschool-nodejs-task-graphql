@@ -1,10 +1,10 @@
 import { GraphQLNonNull } from 'graphql';
-import { UserType } from '../types/user-type.js';
+import { User } from '../models/user.model.js';
 import { UUIDType } from '../types/uuid.js';
 import { ContextValueType } from '../types/context-value-type.js';
 
 export const subscribeTo = {
-  type: UserType,
+  type: User,
   args: {
     userId: { type: new GraphQLNonNull(UUIDType) },
     authorId: { type: new GraphQLNonNull(UUIDType) },

@@ -1,5 +1,5 @@
 import { ContextValueType } from '../types/context-value-type.js';
-import { MemberTypeType } from '../types/member-type-type.js';
+import { MemberType } from '../models/member-type.model.js';
 import { MemberTypeIdType } from '../types/member-type-id.js';
 
 const resolve = async (_, args: { id: string }, context: ContextValueType) => {
@@ -7,7 +7,7 @@ const resolve = async (_, args: { id: string }, context: ContextValueType) => {
 };
 
 export const memberTypeQuery = {
-  type: MemberTypeType,
+  type: MemberType,
   args: { id: { type: MemberTypeIdType } },
   resolve,
 };
